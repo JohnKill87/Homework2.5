@@ -2,7 +2,7 @@ package pro.sky.alistofemployees;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/employee")
@@ -17,27 +17,28 @@ public class EmployeeController {
 
     @GetMapping(path = "/add")
     public Employee addEmployee(@RequestParam("firstName") String firstName,
-                              @RequestParam("lastName") String lastName
+                                @RequestParam("secondName") String secondName,
+                                @RequestParam("lastName") String lastName,
+                                @RequestParam("yearOfBorn") String yearOfBorn
                               ) {
-        return  employeeService.addEmployee(firstName, lastName);
+        return  employeeService.addEmployee(firstName, secondName, lastName, yearOfBorn);
     }
 
     @GetMapping(path = "/remove")
     public Employee removeEmployee(@RequestParam("firstName") String firstName,
-                                 @RequestParam("lastName") String lastName
-                                 ) {
-        return employeeService.removeEmployee(firstName, lastName);
+                                   @RequestParam("secondName") String secondName,
+                                   @RequestParam("lastName") String lastName,
+                                   @RequestParam("yearOfBorn") String yearOfBorn) {
+        return employeeService.removeEmployee(firstName, secondName, lastName, yearOfBorn);
     }
 
     @GetMapping(path = "/find")
-    public String findEmployee(@RequestParam("firstName") String firstName,
-                               @RequestParam("lastName") String lastName
-                               ) {
-        return employeeService.findEmployee(firstName, lastName);
+    public String findEmployee(@RequestParam("yearOfBorn") String yearOfBorn) {
+        return employeeService.findEmployee(yearOfBorn);
     }
 
     @GetMapping()
-    public List<Employee> aListOfEmployees() {
+    public Map<String, Employee> aListOfEmployees() {
         return employeeService.aListOfEmployees();
     }
 }

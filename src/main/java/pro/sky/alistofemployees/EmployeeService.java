@@ -1,13 +1,18 @@
 package pro.sky.alistofemployees;
 
+import pro.sky.alistofemployees.exceptions.EmployeeAlreadyAddedException;
+import pro.sky.alistofemployees.exceptions.EmployeeStorageIsFullException;
+
 import java.util.List;
+import java.util.Map;
 
 public interface EmployeeService {
-    Employee addEmployee(String firstName, String lastName);
 
-    Employee removeEmployee(String firstName, String lastName);
+    Employee addEmployee(String firstName, String secondName, String lastName, String yearOfBorn);
 
-    String findEmployee(String firstName, String lastName);
+    Employee removeEmployee(String firstName, String secondName, String lastName, String yearOfBorn);
 
-    List<Employee> aListOfEmployees();
+    String findEmployee(String yearOfBorn);
+
+    Map<String, Employee> aListOfEmployees();
 }

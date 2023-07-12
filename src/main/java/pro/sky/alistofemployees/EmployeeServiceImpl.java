@@ -5,41 +5,52 @@ import pro.sky.alistofemployees.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.alistofemployees.exceptions.EmployeeNotFoundException;
 import pro.sky.alistofemployees.exceptions.EmployeeStorageIsFullException;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    List<Employee> employees = new ArrayList<>(List.of(
-            new Employee("Nosatov", "Aleksey"),
-            new Employee("Alexander", "Sergey"),
-            new Employee("Gramov", "Grigory"),
-            new Employee("Kopytkin", "Ruslan"),
-            new Employee("Rumin", "Vladislav"),
-            new Employee("Yankin", "Ilya"),
-            new Employee("Romanov", "Boris"),
-            new Employee("Yukutova", "Natalia"),
-            new Employee("Lomara", "Lyudmila"),
-            new Employee("Bragina", "Anastasia")
+    Map<String, Employee> employees = new HashMap<>(Map.of(
+            "1978",
+            new Employee("Носатов", "Алексей", "Юрьевич", "1978"),
+            "1988",
+            new Employee("Александр", "Сергей", "Иванович", "1988"),
+            "1967",
+            new Employee("Грамов", "Григорий", "Иванович", "1967"),
+            "1970",
+            new Employee("Копыткин", "Руслан", "Александрович", "1970"),
+            "2005",
+            new Employee("Румин", "Владислав", "Алексеевич", "2005"),
+            "1998",
+            new Employee("Янкин", "Илья", "Александрович", "1998"),
+            "2001",
+            new Employee("Романов", "Борис", "Николаевич", "2001"),
+            "1997",
+            new Employee("Юкутова", "Наталья", "Анатольевна", "1997"),
+            "2000",
+            new Employee("Ломара", "Людмила", "Ивановна", "2000"),
+            "2007",
+            new Employee("Брагина", "Анастасия", "Людмиловна", "2007")
     ));
     private final static int employeesListSize = 11;
 
     @Override
-    public Employee addEmployee(String firstName, String lastName) {
-        Employee addedEmployee = new Employee(firstName, lastName);
-                if (employees.contains(addedEmployee)) {
-                throw new EmployeeAlreadyAddedException("Сотрудник уже существует");
-            } else if (employees.size() >= employeesListSize){
-                throw new EmployeeStorageIsFullException("Список сотрудников переполнен");
-            }
-        employees.add(addedEmployee);
+    public Employee addEmployee(String firstName, String secondName, String lastName, String yearOfBorn) {
+        Employee addedEmployee = new Employee(firstName, secondName, lastName, yearOfBorn);
+        if (employees.equals(addedEmployee)) {
+            throw new EmployeeAlreadyAddedException("Сотрудник уже существует");
+        } else if (employees.size() >= employeesListSize){
+            throw new EmployeeStorageIsFullException("Список сотрудников переполнен");
+        }
+        employees.put(addedEmployee.getYearOfBirth(), addedEmployee);
         return addedEmployee;
     }
 
     @Override
-    public Employee removeEmployee(String firstName, String lastName) {
-        Employee removedEmployee = new Employee(firstName, lastName);
-            if (employees.remove(removedEmployee)) {
+    public Employee removeEmployee(String firstName, String secondName, String lastName, String yearOfBorn) {
+        Employee removedEmployee = new Employee(firstName, secondName, lastName, yearOfBorn);
+            if (employees.remove(removedEmployee.getYearOfBirth(), removedEmployee)) {
                 return removedEmployee;
             } else {
                 throw new EmployeeNotFoundException("Сотрудник не найден");
@@ -47,20 +58,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String findEmployee(String firstName, String lastName) {
-        for (Employee employee : employees) {
-            if (employee.getFirstName().equals(firstName) && employee.getLastName().equals(lastName)) {
-                final String employeeDescription = ""
-                        + employee.getFirstName() + " "
-                        + employee.getLastName();
-                return employeeDescription;
-            }
+    public String findEmployee(String yearOfBorn) {
+        final Employee employee = employees.get(yearOfBorn);
+        if (employee == null) {
+            throw new EmployeeNotFoundException("Сотрудник не найден");
         }
-        throw new EmployeeNotFoundException("Сотрудник не найден");
+        final String employeeDescription = ""
+                + employee.getFirstName() + " "
+                + employee.getSecondName() + " "
+                + employee.getLastName() + " "
+                + employee.getYearOfBirth();
+        return employeeDescription;
     }
 
     @Override
-    public List<Employee> aListOfEmployees() {
+    public Map<String, Employee> aListOfEmployees() {
         return employees;
     }
 }
