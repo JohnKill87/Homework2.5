@@ -1,18 +1,22 @@
 package pro.sky.alistofemployees;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Employee {
     private final String firstName;
     private final String secondName;
     private final String lastName;
-    private final String yearOfBirth;
+    private final Integer department;
+    private final Integer salary;
 
-    public Employee(String firstName, String secondName, String lastName, String yearOfBirth) {
+    public Employee(String firstName, String secondName, String lastName, Integer department, Integer salary) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
-        this.yearOfBirth = yearOfBirth;
+        this.department = department;
+        this.salary = salary;
     }
 
     public String getFirstName() {
@@ -27,13 +31,23 @@ public class Employee {
         return lastName;
     }
 
-    public String getYearOfBirth() {
-        return yearOfBirth;
+    public int getSalary() {
+        return salary;
+    }
+
+    public Integer getDepartment() {
+        return department;
     }
 
     @Override
     public String toString() {
-        return "Сотрудник : " + "Имя - " + firstName + '\'' + ", Фамилия - " + lastName + '\'' + '}';
+        return "Employee{" +
+                "firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", department=" + department +
+                ", salary=" + salary +
+                '}';
     }
 
     @Override
@@ -41,11 +55,11 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(getFirstName(), employee.getFirstName()) && Objects.equals(getSecondName(), employee.getSecondName()) && Objects.equals(getLastName(), employee.getLastName()) && Objects.equals(getYearOfBirth(), employee.getYearOfBirth());
+        return Objects.equals(getFirstName(), employee.getFirstName()) && Objects.equals(getSecondName(), employee.getSecondName()) && Objects.equals(getLastName(), employee.getLastName()) && Objects.equals(getDepartment(), employee.getDepartment()) && Objects.equals(getSalary(), employee.getSalary());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getFirstName(), getSecondName(), getLastName(), getYearOfBirth());
+        return Objects.hash(getFirstName(), getSecondName(), getLastName(), getDepartment(), getSalary());
     }
 }
