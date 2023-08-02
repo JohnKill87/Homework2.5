@@ -1,9 +1,11 @@
 package pro.sky.alistofemployees;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.alistofemployees.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.alistofemployees.exceptions.EmployeeNotFoundException;
 import pro.sky.alistofemployees.exceptions.EmployeeStorageIsFullException;
+import pro.sky.alistofemployees.exceptions.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(String firstName, String secondName, String lastName, Integer department, Integer salary) {
+
+        if (!validateInput(firstName, secondName, lastName)) {
+            throw new InvalidInputException();
+        }
+
         Employee addedEmployee = new Employee(firstName,  secondName, lastName, department, salary);
         if (employees.contains(addedEmployee)) {
             throw new EmployeeAlreadyAddedException("Сотрудник уже существует");
@@ -49,6 +56,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee removeEmployee(String firstName, String secondName, String lastName, Integer department, Integer salary) {
+
+        if (!validateInput(firstName, secondName, lastName)) {
+            throw new InvalidInputException();
+        }
+
         Employee removedEmployee = new Employee(firstName, secondName, lastName, department, salary);
         if (employees.remove(removedEmployee)) {
             return removedEmployee;
@@ -59,6 +71,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String findEmployee(String firstName, String secondName, String lastName, Integer department, Integer salary) {
+
+        if (!validateInput(firstName, secondName, lastName)) {
+            throw new InvalidInputException();
+        }
+
         for (Employee employee : employees) {
             if (employee.getFirstName().equals(firstName) && employee.getLastName().equals(lastName)) {
                 final String employeeDescription = ""
@@ -73,5 +90,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> aListOfEmployees() {
         return employees;
+    }
+
+    private boolean validateInput(String firstName, String secondName, String lastName) {
+        return StringUtils.isAlpha(firstName) && StringUtils.isAlpha(secondName) && StringUtils.isAlpha(lastName);
     }
 }

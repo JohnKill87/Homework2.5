@@ -20,7 +20,6 @@ public class DepartmentService {
         this.employeeService = employeeService;
     }
 
-    //        (Сотрудник с минимальной зарплатой)
     public Employee employeeWithMinSalary(Integer department) {
      return employeeService.aListOfEmployees().stream()
              .filter(employee -> employee.getDepartment() == department)

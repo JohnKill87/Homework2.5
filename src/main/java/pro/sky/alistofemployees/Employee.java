@@ -1,5 +1,7 @@
 package pro.sky.alistofemployees;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,9 +14,9 @@ public class Employee {
     private final Integer salary;
 
     public Employee(String firstName, String secondName, String lastName, Integer department, Integer salary) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.lastName = lastName;
+        this.firstName = StringUtils.capitalize(firstName.toLowerCase());
+        this.secondName = StringUtils.capitalize(secondName.toLowerCase());
+        this.lastName = StringUtils.capitalize(lastName.toLowerCase());
         this.department = department;
         this.salary = salary;
     }
