@@ -1,9 +1,7 @@
-package pro.sky.alistofemployees;
+package pro.sky.alistofemployees.objects;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Employee {

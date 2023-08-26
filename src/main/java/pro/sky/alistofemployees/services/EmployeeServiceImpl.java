@@ -1,7 +1,8 @@
-package pro.sky.alistofemployees;
+package pro.sky.alistofemployees.services;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import pro.sky.alistofemployees.objects.Employee;
 import pro.sky.alistofemployees.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.alistofemployees.exceptions.EmployeeNotFoundException;
 import pro.sky.alistofemployees.exceptions.EmployeeStorageIsFullException;

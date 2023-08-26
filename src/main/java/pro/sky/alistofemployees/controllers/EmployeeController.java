@@ -1,10 +1,10 @@
-package pro.sky.alistofemployees;
+package pro.sky.alistofemployees.controllers;
 
 import org.springframework.web.bind.annotation.*;
+import pro.sky.alistofemployees.objects.Employee;
+import pro.sky.alistofemployees.services.EmployeeService;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @RestController

@@ -1,12 +1,12 @@
-package pro.sky.alistofemployees;
+package pro.sky.alistofemployees.services;
 
 import org.springframework.stereotype.Service;
+import pro.sky.alistofemployees.objects.Employee;
 import pro.sky.alistofemployees.exceptions.EmployeeNotFoundException;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
