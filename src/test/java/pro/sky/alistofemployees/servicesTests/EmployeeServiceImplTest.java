@@ -1,6 +1,9 @@
 package pro.sky.alistofemployees.servicesTests;
 
 import org.junit.jupiter.api.Test;
+import pro.sky.alistofemployees.exceptions.EmployeeAlreadyAddedException;
+import pro.sky.alistofemployees.exceptions.EmployeeNotFoundException;
+import pro.sky.alistofemployees.exceptions.EmployeeStorageIsFullException;
 import pro.sky.alistofemployees.objects.Employee;
 import pro.sky.alistofemployees.services.EmployeeServiceImpl;
 
@@ -35,7 +38,55 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    void removeEmployee_success() {
+    void addEmployee_withEmployeeAlreadyAddedException() {
+
+//        Входные данные.
+
+        String firstName = IVAN_FIRST_NAME;
+        String secondName = IVAN_SECOND_NAME;
+        String lastName = IVAN_LAST_NAME;
+        int salary = IVAN_SALARY;
+        int department = DEPARTMENT_ONE;
+
+//        Ожидаемый результат.
+
+        employeeService.addEmployee(firstName, secondName, lastName, department, salary);
+        String expectedMessage = "Сотрудник уже существует";
+
+//        Тест.
+
+        Exception exception = assertThrows(EmployeeAlreadyAddedException.class, () -> employeeService
+                .addEmployee(firstName, secondName, lastName, department, salary));
+
+        assertEquals(expectedMessage, exception.getMessage());
+    }
+
+    @Test
+    void addEmployee_withEmployeeStorageIsFullException() {
+
+//        Входные данные.
+
+        String firstName = IVAN_FIRST_NAME;
+        String secondName = IVAN_SECOND_NAME;
+        String lastName = IVAN_LAST_NAME;
+        int salary = IVAN_SALARY;
+        int department = DEPARTMENT_ONE;
+
+//        Ожидаемый результат.
+
+        employeeService.addEmployee(ILYA_FIRST_NAME, ILYA_SECOND_NAME, ILYA_LAST_NAME, DEPARTMENT_ONE, ILYA_SALARY);
+        String expectedMessage = "Список сотрудников переполнен";
+
+//        Тест.
+
+        Exception exception = assertThrows(EmployeeStorageIsFullException.class, () -> employeeService
+                .addEmployee(firstName, secondName, lastName, department, salary));
+
+        assertEquals(expectedMessage, exception.getMessage());
+    }
+
+    @Test
+    void removeEmployee_withEmployeeNotFoundException() {
 
 //        Входные данные.
 
@@ -47,7 +98,8 @@ class EmployeeServiceImplTest {
 
 //        Тест.
 
-        assertThrows(RuntimeException.class, () -> employeeService.removeEmployee(firstName, secondName, lastName, department, salary));
+        assertThrows(EmployeeNotFoundException.class, () -> employeeService.
+                removeEmployee(firstName, secondName, lastName, department, salary));
     }
 
     @Test
@@ -68,6 +120,31 @@ class EmployeeServiceImplTest {
 
 //        Тест.
 
-        assertEquals(expected, "Иван Иванович");
+        String actual = "Иван Иванович";
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void findEmployee_withEmployeeNotFoundException() {
+
+//        Входные данные.
+
+        String firstName = IVAN_FIRST_NAME;
+        String secondName = IVAN_SECOND_NAME;
+        String lastName = IVAN_LAST_NAME;
+        int salary = IVAN_SALARY;
+        int department = DEPARTMENT_ONE;
+
+//        Ожидаемый результат.
+
+        String expectedMessage = "Сотрудник не найден";
+
+//        Тест.
+
+        Exception exception = assertThrows(EmployeeNotFoundException.class, () -> employeeService
+                .findEmployee(firstName, secondName, lastName, department, salary));
+
+        assertEquals(expectedMessage, exception.getMessage());
     }
 }
